@@ -2,7 +2,7 @@
 
 Sends logs to [logz.io](https://logz.io) over HTTP. It is a low level lib that can to be integrated with other logging libs.
 
-[![GoDoc][doc-img]][doc] [![Build Status][ci-img]][ci] [![Coverage Status][cov-img]][cov] [![Go Report][report-img]][report]
+[comment]: <> ([![GoDoc][doc-img]][doc] [![Build Status][ci-img]][ci] [![Coverage Status][cov-img]][cov] [![Go Report][report-img]][report])
 
 ## Prerequisites
 go 1.x
@@ -11,9 +11,19 @@ go 1.x
 ```shell
 $ go get -u github.com/logzio/logzio-go
 ```
+Logzio golang api client offers two queue implementations that you can use:
+## Disk queue
+Logzio go client uses [goleveldb](https://github.com/syndtr/goleveldb) and [goqueue](github.com/beeker1121/goque) as a persistent storage.
+Every 5 seconds logs are sent to logz.io (if any are available)
+
+## In memory queue
+You can see the logzio go client queue implementation in `inMemoryQueue.go` file. The in memory queue is initialized with 500k log count limit and 20mb capacity by default.
+You can use the `SetinMemoryCapacity()` and `SetlogCountLimit()` functions to override default settings.
+
 
 ## Quick Start
 
+### Disk queue
 ```go
 package main
 
@@ -47,6 +57,40 @@ func main() {
 }
 ```
 
+### In memory queue
+```go
+package main
+
+import (
+  "fmt"
+  "github.com/logzio/logzio-go"
+  "os"
+  "time"
+)
+
+func main() {
+  l, err := logzio.New(
+  		"fake-token",
+  		SetDebug(os.Stderr),
+  		SetUrl("http://localhost:12345"),
+	    SetInMemoryQueue(true),
+	    SetinMemoryCapacity(24000000),
+	    SetlogCountLimit(6000000),
+  	) // token is required
+  if err != nil {
+    panic(err)
+  }
+  msg := fmt.Sprintf("{ \"%s\": \"%s\"}", "message", time.Now().UnixNano())
+
+  err = l.Send([]byte(msg))
+  if err != nil {
+     panic(err)
+  }
+
+  l.Stop() 
+}
+```
+
 ## Usage
 
 - Set url mode:
@@ -67,10 +111,22 @@ func main() {
 - Set disk queue threshold, once the threshold is crossed the sender will not enqueue the received logs:
     `logzio.New(token, SetDrainDiskThreshold(99))`
 
-## Disk queue
+- Set the sender to Use in memory queue:
+  `logzio.New(token, SetInMemoryQueue(true))`
 
-Logzio go client uses [goleveldb](https://github.com/syndtr/goleveldb) and [goqueue](github.com/beeker1121/goque) as a persistent storage.
-Every 5 seconds logs are sent to logz.io (if any are available)
+- Set the sender to Use in memory queue with log count limit and capacity:
+  `logzio.New(token,
+  SetInMemoryQueue(true),
+  SetinMemoryCapacity(500),
+  SetlogCountLimit(6000000),
+  )`
+  
+## Data compression
+All bulks are compressed with gzip by default to disable compressing initialize the client with `SetCompress(false)`:
+```go
+  logzio.New(token, SetCompress(false),
+  )
+```
 
 ## Tests
 
@@ -79,8 +135,6 @@ $ go test -v
 
 ```
 
-
-See [travis.yaml](.travis.yml) for running benchmark tests
 
 
 ## Contributing
@@ -99,3 +153,9 @@ This project is licensed under the Apache License - see the [LICENSE](LICENSE) f
 ## Acknowledgments
 
 * [logzio-java-sender](https://github.com/logzio/logzio-java-sender)
+
+
+## Changelog
+- v1.0.1
+    - Add gzip compression
+    - Add option for im Memory queue
