@@ -37,11 +37,11 @@ import (
 func main() {
   l, err := logzio.New(
   		"fake-token",
-  		SetDebug(os.Stderr),
-  		SetUrl("http://localhost:12345"),
-  		SetDrainDuration(time.Minute*10),
-        SetSetTempDirectory("myQueue"),
-        SetDrainDiskThreshold(99)
+	  logzio.SetDebug(os.Stderr),
+	  logzio.SetUrl("http://localhost:12345"),
+	  logzio.SetDrainDuration(time.Minute*10),
+	  logzio.SetTempDirectory("myQueue"),
+	  logzio.SetDrainDiskThreshold(99),
   	) // token is required
   if err != nil {
     panic(err)
@@ -71,11 +71,11 @@ import (
 func main() {
   l, err := logzio.New(
   		"fake-token",
-  		SetDebug(os.Stderr),
-  		SetUrl("http://localhost:12345"),
-	    SetInMemoryQueue(true),
-	    SetinMemoryCapacity(24000000),
-	    SetlogCountLimit(6000000),
+	  logzio.SetDebug(os.Stderr),
+	  logzio.SetUrl("http://localhost:12345"),
+	  logzio.SetInMemoryQueue(true),
+	  logzio.SetinMemoryCapacity(24000000),
+	  logzio.SetlogCountLimit(6000000),
   	) // token is required
   if err != nil {
     panic(err)
@@ -159,3 +159,6 @@ This project is licensed under the Apache License - see the [LICENSE](LICENSE) f
 - v1.0.1
     - Add gzip compression
     - Add option for in Memory queue
+  
+- v1.0.2
+  - Update dependencies
