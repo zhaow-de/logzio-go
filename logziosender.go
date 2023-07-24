@@ -292,9 +292,10 @@ func (l *LogzioSender) makeHttpRequest(data bytes.Buffer, attempt int, c bool) i
 		req.Header.Add("Content-Encoding", "gzip")
 	}
 	l.debugLog("logziosender.go: Sending bulk of %v bytes\n", l.buf.Len())
+	l.debugLog("logziosender.go: Sending logs to %s\n", l.url)
 	resp, err := l.httpClient.Do(req)
 	if err != nil {
-		//l.debugLog("logziosender.go: Error sending logs to %s %s\n", l.url, err)
+		l.debugLog("logziosender.go: Error sending logs to %s %s\n", l.url, err)
 		return httpError
 	}
 
