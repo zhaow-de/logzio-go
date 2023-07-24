@@ -39,7 +39,7 @@
 [[projects]]
   branch = "master"
   digest = "1:97326fb5ec095d0e550c68882ed112eac007d0cc9a02296c883a2852a67f65ba"
-  name = "github.com/logzio/logzio-go"
+  name = "github.com/zhaow-de/logzio-go"
   packages = ["."]
   pruneopts = "UT"
   revision = "64e9870f9db3c60bdd8901650eab10a74e37a0a9"
@@ -100,7 +100,7 @@
   analyzer-version = 1
   input-imports = [
     "github.com/beeker1121/goque",
-    "github.com/logzio/logzio-go",
+    "github.com/zhaow-de/logzio-go",
     "github.com/shirou/gopsutil/disk",
     "go.uber.org/atomic",
   ]

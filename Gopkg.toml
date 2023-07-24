@@ -31,7 +31,7 @@
 
 [[constraint]]
   branch = "master"
-  name = "github.com/logzio/logzio-go"
+  name = "github.com/zhaow-de/logzio-go"
 
 [[constraint]]
   name = "github.com/shirou/gopsutil"

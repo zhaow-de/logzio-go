@@ -9,7 +9,7 @@ go 1.x
 
 ## Installation
 ```shell
-$ go get -u github.com/logzio/logzio-go
+$ go get -u github.com/zhaow-de/logzio-go
 ```
 Logzio golang api client offers two queue implementations that you can use:
 ## Disk queue
@@ -29,7 +29,7 @@ package main
 
 import (
   "fmt"
-  "github.com/logzio/logzio-go"
+  "github.com/zhaow-de/logzio-go"
   "os"
   "time"
 )
@@ -63,7 +63,7 @@ package main
 
 import (
   "fmt"
-  "github.com/logzio/logzio-go"
+  "github.com/zhaow-de/logzio-go"
   "os"
   "time"
 )

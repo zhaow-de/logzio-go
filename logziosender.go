@@ -20,7 +20,7 @@ import (
 	"crypto/tls"
 	"fmt"
 	"github.com/beeker1121/goque"
-	"github.com/logzio/logzio-go/inMemoryQueue"
+	"github.com/zhaow-de/logzio-go/inMemoryQueue"
 	"github.com/shirou/gopsutil/v3/disk"
 	"io"
 	"io/ioutil"
@@ -36,7 +36,7 @@ const (
 	maxSize               = 3 * 1024 * 1024 // 3 mb
 	sendSleepingBackoff   = time.Second * 2
 	sendRetries           = 4
-	defaultHost           = "https://listener.logz.io:8071"
+	defaultHost           = "https://listener-eu.logz.io:8071"
 	defaultDrainDuration  = 5 * time.Second
 	defaultDiskThreshold  = 95.0 // represent % of the disk
 	defaultCheckDiskSpace = true
